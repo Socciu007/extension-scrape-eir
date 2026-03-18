@@ -14,12 +14,17 @@ export default defineManifest({
     },
     default_popup: 'src/popup/index.html',
   },
+  host_permissions: ['https://*/*'],
   permissions: [
     'sidePanel',
     'contentSettings',
+    'activeTab',
+    'scripting',
+    'storage',
+    'tabs',
   ],
   content_scripts: [{
-    js: ['src/content/main.tsx'],
+    js: ['src/content/main.tsx', 'src/content/features/index.ts'],
     matches: ['https://*/*'],
   }],
   side_panel: {

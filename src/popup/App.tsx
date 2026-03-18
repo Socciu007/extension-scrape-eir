@@ -1,22 +1,32 @@
-import crxLogo from '@/assets/crx.svg'
-import reactLogo from '@/assets/react.svg'
-import viteLogo from '@/assets/vite.svg'
-import HelloWorld from '@/components/HelloWorld'
 import './App.css'
+import SelectComponent from '@/components/SelectComponent'
+import ButtonComponent from '@/components/ButtonComponent'
 
 export default function App() {
+  // Handle scrape button click
+  const handleScrape = async () => {
+    console.log("scrape")
+
+    const [tab]: any = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    })
+
+    try {
+      await chrome.tabs.sendMessage(tab.id, {
+        type: "AUTO_LOGIN",
+      })
+    } catch (e) {
+      console.error("❌ content script chưa inject", e)
+    }
+  }
   return (
-    <div>
-      <a href="https://vite.dev" target="_blank" rel="noreferrer">
-        <img src={viteLogo} className="logo" alt="Vite logo" />
-      </a>
-      <a href="https://reactjs.org/" target="_blank" rel="noreferrer">
-        <img src={reactLogo} className="logo react" alt="React logo" />
-      </a>
-      <a href="https://crxjs.dev/vite-plugin" target="_blank" rel="noreferrer">
-        <img src={crxLogo} className="logo crx" alt="crx logo" />
-      </a>
-      <HelloWorld msg="Vite + React + CRXJS" />
+    <div className='p-4'>
+      <h3 className="text-2xl font-bold">Hello World</h3>
+      <div className="flex gap-2 items-center justify-center">
+        <SelectComponent options={['OOCL', 'ONE', 'COSCO']} id="selectShip" onChange={() => {}} label="Select:" />
+        <ButtonComponent onClick={handleScrape} text="Scrape" id="scrape" className="" />
+      </div>
     </div>
   )
 }
