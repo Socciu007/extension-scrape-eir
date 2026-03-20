@@ -16,7 +16,6 @@ export default defineManifest({
   },
   host_permissions: ['https://*/*'],
   permissions: [
-    'sidePanel',
     'contentSettings',
     'activeTab',
     'scripting',
@@ -24,7 +23,7 @@ export default defineManifest({
     'tabs',
   ],
   content_scripts: [{
-    js: ['src/content/main.tsx', 'src/content/features/index.ts'],
+    js: ['src/content/features/index.ts'],
     matches: ['https://*/*'],
   }],
   side_panel: {
